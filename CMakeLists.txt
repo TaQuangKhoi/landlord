@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30)
-project(land_lord)
+project(landlord)
 
 set(CMAKE_CXX_STANDARD 20)
 
