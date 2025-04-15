@@ -1,0 +1,12 @@
+{
+  "listeners": [
+    {
+      "address": "0.0.0.0",
+      "port": 8848
+    }
+  ],
+  "app": {
+    "document_root": "./",
+    "home_page": "index.html"
+  }
+}

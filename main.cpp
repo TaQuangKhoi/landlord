@@ -1,6 +1,8 @@
-#include <iostream>
+#include <drogon/drogon.h>
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+int main()
+{
+    drogon::app().loadConfigFile("../config.json");
+    drogon::app().run();
     return 0;
 }
