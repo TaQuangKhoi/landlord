@@ -34,3 +34,4 @@
 cmake-build-debug
 build
 vcpkg_installed
+repomix-output.txt
