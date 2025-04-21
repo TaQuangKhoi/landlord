@@ -3,6 +3,9 @@
   "version-string": "0.1.0",
   "dependencies": [
     "fmt",
-    "drogon"
+    {
+      "name": "drogon",
+      "features": [ "ctl", "sqlite3" ]
+    }
   ]
 }
