@@ -39,6 +39,17 @@ int main()
             callback(resp);
         });
 
+
+    drogon::app().registerHandler(
+    "/about",
+    [](const drogon::HttpRequestPtr& req,
+       std::function<void(const drogon::HttpResponsePtr&)>&& callback)
+    {
+        auto resp = drogon::HttpResponse::newHttpResponse();
+        resp->setBody("Hello, guest! i am Tan! I am a software engineer!");
+        callback(resp);
+    });
+
     drogon::app().run();
 
     return 0;
