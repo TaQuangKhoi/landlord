@@ -1,5 +1,4 @@
 #include <drogon/drogon.h>
-#include <fmt/core.h>
 
 int main() {
     drogon::app().loadConfigFile("../config.json");
