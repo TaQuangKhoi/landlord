@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(landlord
         main.cpp
         TanController.cc
+        TestCtrl.cc
 )
 
 find_package(fmt CONFIG REQUIRED)
