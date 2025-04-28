@@ -6,7 +6,12 @@
     }
   ],
   "app": {
-    "document_root": "./",
-    "home_page": "index.html"
+    "document_root": "../public",
+    "static_files_path": ["/"],
+    "enable_session": false,
+    "log": {
+      "log_path": "../logs",
+      "log_level": "trace"
+    }
   }
 }
