@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(landlord
         main.cpp
         MessageHandler.cc
+        SumController.cc
 )
 
 find_package(Drogon CONFIG REQUIRED)
