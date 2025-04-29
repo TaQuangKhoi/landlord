@@ -12,8 +12,5 @@ add_executable(landlord
 )
 
 
-find_package(fmt CONFIG REQUIRED)
-target_link_libraries(landlord PRIVATE fmt::fmt)
-
 find_package(Drogon CONFIG REQUIRED)
 target_link_libraries(landlord PRIVATE Drogon::Drogon)
