@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello Drogon</title>
     <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
     >
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script src="https://unpkg.com/@hotwired/stimulus/dist/stimulus.umd.js"></script>
+
+    <script src="app.js" type="module"></script>
+
+    <style>
+        /* Thêm chút khoảng cách cho dễ nhìn */
+        body { padding: 40px; }
+    </style>
 </head>
 <body>
 <h1>Hello World from Drogon!</h1>
-<div x-data="{ count: 0 }">
-    <button x-on:click="count++"
-            class="button"
+<div data-controller="counter">
+    <button data-action="click->counter#increment" class="button"
     >Increment
     </button>
 
-    <span x-text="count"></span>
+    <span data-counter-target="output">
+        </span>
 </div>
 <button class="button is-info is-loading">Button</button>
 <div class="card">
