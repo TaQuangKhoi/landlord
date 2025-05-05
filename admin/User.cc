@@ -6,6 +6,6 @@ void UserController::asyncHandleHttpRequest(const drogon::HttpRequestPtr& req, s
 {
     std::string path = req->getPath();
     auto resp = HttpResponse::newHttpResponse();
-    resp->setBody("Response for GET request to /adminUser from TanController");
+    resp->setBody("Bạn là Admin");
     callback(resp);
 }
