@@ -4,7 +4,16 @@
   "dependencies": [
     {
       "name": "drogon",
-      "features": [ "ctl" ]
+      "features": [
+        "ctl",
+        "sqlite3"
+      ]
+    },
+    {
+      "name": "sqlite3",
+      "features": [
+        "dbstat"
+      ]
     }
   ]
 }

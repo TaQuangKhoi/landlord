@@ -14,3 +14,6 @@ add_executable(landlord
 
 find_package(Drogon CONFIG REQUIRED)
 target_link_libraries(landlord PRIVATE Drogon::Drogon)
+
+find_package(unofficial-sqlite3 CONFIG REQUIRED)
+target_link_libraries(landlord PRIVATE unofficial::sqlite3::sqlite3)
