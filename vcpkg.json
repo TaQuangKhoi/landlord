@@ -6,6 +6,7 @@
       "name": "drogon",
       "features": [
         "ctl",
+        "orm",
         "sqlite3"
       ]
     },
