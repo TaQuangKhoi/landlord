@@ -9,6 +9,7 @@ add_executable(landlord
         SumController.cc
         TanController.cc
         TestCtrl.cc
+        admin/User.cc
 )
 
 find_package(Drogon CONFIG REQUIRED)
