@@ -13,5 +13,14 @@
       "log_path": "../logs",
       "log_level": "trace"
     }
-  }
+  },
+
+  "db_clients": [
+    {
+      "name": "sqlite_conn",
+      "driver": "sqlite3",
+      "filename": "landlord.db",
+      "connection_number": 1
+    }
+  ]
 }
