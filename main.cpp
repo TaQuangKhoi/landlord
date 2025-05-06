@@ -3,8 +3,10 @@
 
 int main()
 {
+    // connect with database
     auto dbClient = drogon::orm::DbClient::newSqlite3Client("filename=landlord.db", 1);
 
+    // create data if there's no any rows
     try
     {
         auto createTableResult = dbClient->execSqlSync(
