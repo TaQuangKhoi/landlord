@@ -90,6 +90,9 @@ int main()
 
                         for (const auto& row : result)
                         {
+                            LOG_INFO << "Room ID: " << row["id"].as<std::string>()
+                                     << ", Name: " << row["name"].as<std::string>()
+                                     << ", Description: " << row["description"].as<std::string>();
                             std::map<std::string, std::string> room;
                             room["id"] = row["id"].as<std::string>();
                             room["name"] = row["name"].as<std::string>();
@@ -97,7 +100,7 @@ int main()
                             rooms_list_for_view.push_back(room);
                         }
                         view_data.insert("rooms_for_view", rooms_list_for_view);
-                        auto resp = drogon::HttpResponse::newHttpViewResponse("rooms_list.csp", view_data);
+                        auto resp = drogon::HttpResponse::newHttpViewResponse("RoomsList.csp", view_data);
                         callback(resp);
                     }
                 },
