@@ -19,7 +19,7 @@ set(VIEW_OUTPUT_PATH "${CMAKE_CURRENT_BINARY_DIR}/generated_views")
 
 # Gọi hàm với đủ 3 tham số bắt buộc
 drogon_create_views(landlord
-        "${CMAKE_CURRENT_SOURCE_DIR}/views"  # THAY ĐỔI Ở ĐÂY: Chỉ cần đường dẫn thư mục chứa .csp
+        "${CMAKE_CURRENT_SOURCE_DIR}/views"
         ${VIEW_OUTPUT_PATH}
 )
 
