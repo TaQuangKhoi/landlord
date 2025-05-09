@@ -10,7 +10,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: url('URL_HINH_NEN') no-repeat center center fixed;
+            background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Montserrat', sans-serif;
             color: #fff;
@@ -30,6 +30,7 @@
             box-shadow: 0 0 40px rgba(0, 255, 180, 0.4);
             max-width: 700px;
             margin-bottom: 40px;
+            margin-top: 120px;
         }
 
         h1 {
@@ -82,9 +83,60 @@
         canvas {
             max-width: 100%;
         }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0, 255, 195, 0.3);
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background-color: #00ffc3;
+            color: #000;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.1);
+            background-color: #00d9a3;
+        }
     </style>
 </head>
 <body>
+
+<!-- ==== THANH ĐIỀU HƯỚNG ĐẦY ĐỦ ==== -->
+<nav class="navbar">
+
+    <a href="bieu_do_dien.html" class="nav-button">
+        Điện
+    </a>
+    <a href="bieu_do_water.html" class="nav-button">
+        Nước
+    </a>
+    <a href="bieu_do_ga.html" class="nav-button">
+        Ga
+    </a>
+    <button class="nav-button">Thuê phòng</button>
+    <button class="nav-button">Báo hỏng</button>
+    <button class="nav-button">Lịch sử thanh toán</button>
+    <button class="nav-button">Quản lý hợp đồng</button>
+    <button class="nav-button">Đánh giá phòng trọ</button> <!-- Thêm nút này vào -->
+</nav>
+
 <div class="poster">
     <h1>LANDLORD</h1>
     <div class="slogan">Thu tiền đúng – Không sót, không sai 💸</div>

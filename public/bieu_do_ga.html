@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiền Gas - Phòng 101</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ff4500, #ff6347);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(255, 99, 71, 0.7);
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background-color: #ff4500; /* Đỏ cam - phù hợp với nền */
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 69, 0, 0.5);
+        }
+
+        .nav-button:hover {
+            background-color: #ff6347; /* Đỏ nhạt hơn khi hover */
+            transform: scale(1.1);
+        }
+
+        .chart-container {
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 20px rgba(255, 99, 71, 0.7);
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        h1 {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==== THANH ĐIỀU HƯỚNG ==== -->
+<nav class="navbar">
+    <a href="bieu_do_dien.html" class="nav-button">
+        Điện
+    </a>
+    <a href="bieu_do_water.html" class="nav-button">
+        Nước
+    </a>
+    <a href="bieu_do_ga.html" class="nav-button">
+        Ga
+    </a>
+    <button class="nav-button">Thuê phòng</button>
+    <button class="nav-button">Báo hỏng</button>
+    <button class="nav-button">Lịch sử thanh toán</button>
+    <button class="nav-button">Quản lý hợp đồng</button>
+    <button class="nav-button">Đánh giá phòng trọ</button>
+</nav>
+
+<h1>Tiền Gas - Phòng 101</h1>
+<div class="chart-container">
+    <canvas id="gasChart"></canvas>
+</div>
+
+<script>
+    const ctx = document.getElementById('gasChart').getContext('2d');
+    const gasChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
+            datasets: [{
+                label: 'Tiền gas (VNĐ)',
+                data: [180000, 200000, 220000, 175000, 240000], // Fake data
+                borderColor: '#ff4500',
+                backgroundColor: 'rgba(255, 69, 0, 0.3)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 6,
+                pointBackgroundColor: '#ff4500',
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#fff',
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#fff' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                },
+                y: {
+                    ticks: { color: '#fff' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
