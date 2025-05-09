@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+<%c++ if (true) { %>
+    <h1>Hi [[ name ]]</h1>
+<%c++ } else { %>
+    <h1>Bye [[ name ]]</h1>
+<%c++ } %>
+</body>
+</html>

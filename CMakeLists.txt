@@ -15,5 +15,13 @@ add_executable(landlord
 find_package(Drogon CONFIG REQUIRED)
 target_link_libraries(landlord PRIVATE Drogon::Drogon)
 
+set(VIEW_OUTPUT_PATH "${CMAKE_CURRENT_BINARY_DIR}/generated_views")
+
+# Gọi hàm với đủ 3 tham số bắt buộc
+drogon_create_views(landlord
+        "${CMAKE_CURRENT_SOURCE_DIR}/views"  # THAY ĐỔI Ở ĐÂY: Chỉ cần đường dẫn thư mục chứa .csp
+        ${VIEW_OUTPUT_PATH}
+)
+
 find_package(unofficial-sqlite3 CONFIG REQUIRED)
 target_link_libraries(landlord PRIVATE unofficial::sqlite3::sqlite3)

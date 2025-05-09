@@ -12,6 +12,8 @@
     "log": {
       "log_path": "../logs",
       "log_level": "trace"
-    }
+    },
+    "load_dynamic_views": true,
+    "dynamic_views_path": ["./views/d"]
   }
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<%c++
+    // Lấy dữ liệu 'rooms_for_view' từ controller
+    auto rooms = @@.get<std::vector<std::map<std::string, std::string>>>("rooms_for_view");
+%>
+
+<head>
+    <title>Rooms List - Landlord</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <style>
+        body { padding: 20px; }
+        .room-item { margin-bottom: 15px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .room-item b { color: #3273dc; }
+        .no-rooms { font-style: italic; color: #7a7a7a; }
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Available Rooms:</h1>
+            <%c++ // Bắt đầu khối C++ để kiểm tra 'rooms' có rỗng không
+                if (rooms.empty()) {
+            %>
+                <p class="no-rooms subtitle is-5">No rooms found in the database.</p>
+            <%c++ // Kết thúc khối điều kiện 'if', bắt đầu khối 'else'
+            } else {
+            %>
+                <div class="list">
+                    <%c++ // Bắt đầu vòng lặp C++ để duyệt qua từng 'room' trong 'rooms'
+                        for (const auto& room : rooms) {
+                    %>
+                        <div class="list-item room-item box">
+                            <p><b>ID:</b> {% room.at("id") %}</p>
+                            <p><b>Name:</b> {% room.at("name") %}</p>
+                            <p><b>Description:</b> {% room.at("description") %}</p>
+                        </div>
+                    <%c++ // Kết thúc một vòng lặp
+                        } // Đóng vòng lặp for
+                    %>
+                </div> <%c++ // Kết thúc khối C++
+            } // Đóng khối else
+            %>
+        </div>
+    </section>
+</body>
+</html>
