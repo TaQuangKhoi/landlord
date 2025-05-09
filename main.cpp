@@ -5,6 +5,9 @@ int main()
 {
     auto dbClient = drogon::orm::DbClient::newSqlite3Client("filename=landlord.db", 1);
 
+    drogon::app().loadConfigFile("../config.json");
+
+
     try
     {
         auto createTableResult = dbClient->execSqlSync(
@@ -35,49 +38,68 @@ int main()
         LOG_ERROR << "Database setup error for 'rooms' table: " << e.base().what();
     }
 
-    drogon::app().loadConfigFile("../config.json");
+    drogon::app().registerHandler(
+        "/hi/{}",
+        [](const drogon::HttpRequestPtr& req, std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+           const std::string& name)
+        {
+            drogon::HttpViewData data;
+            data.insert("name", name);
+            auto resp = drogon::HttpResponse::newHttpViewResponse("Example.csp", data);
+            callback(resp);
+        });
+
+    drogon::app().registerHandler("/list_para",
+                                  [=](const drogon::HttpRequestPtr& req,
+                                      std::function<void (const drogon::HttpResponsePtr&)>&& callback)
+                                  {
+                                      auto para = req->getParameters();
+                                      drogon::HttpViewData data;
+                                      data.insert("title", "ListParameters");
+                                      data.insert("parameters", para);
+                                      auto resp = drogon::HttpResponse::newHttpViewResponse("ListParameters.csp", data);
+                                      callback(resp);
+                                  });
 
     drogon::app().registerHandler(
         "/",
         [dbClient](
         const drogon::HttpRequestPtr& req,
-        std::function<void(const drogon::HttpResponsePtr&)>&& callback
-    )
+        std::function<void(const drogon::HttpResponsePtr&)>&& callback)
         {
             std::string sql = "SELECT id, name, description FROM rooms;";
-
 
             dbClient->execSqlAsync(
                 sql,
                 [callback](const drogon::orm::Result& result)
                 {
-                    std::ostringstream os;
-                    os << "<!DOCTYPE html><html><head><title>Rooms List</title></head><body>";
-                    os << "<h1>Available Rooms:</h1>";
-
                     if (result.empty())
                     {
-                        os << "<p>No rooms found in the database.</p>";
+                        // KIỂM TRA Ở ĐÂY
+                        // Nếu không có room nào, trả về text thuần
+                        auto resp = drogon::HttpResponse::newHttpResponse();
+                        resp->setBody("No rooms found in the database.");
+                        resp->setContentTypeCode(drogon::CT_TEXT_PLAIN); // Quan trọng: đặt content type là text
+                        callback(resp);
                     }
                     else
                     {
-                        os << "<ul>";
+                        // Nếu có room, tiếp tục render file CSP như bình thường
+                        drogon::HttpViewData view_data;
+                        std::vector<std::map<std::string, std::string>> rooms_list_for_view;
+
                         for (const auto& row : result)
                         {
-                            os << "<li>";
-                            os << "<b>ID:</b> " << row["id"].as<std::string>();
-                            os << ", <b>Name:</b> " << row["name"].as<std::string>();
-                            os << ", <b>Description:</b> " << row["description"].as<std::string>();
-                            os << "</li>";
+                            std::map<std::string, std::string> room;
+                            room["id"] = row["id"].as<std::string>();
+                            room["name"] = row["name"].as<std::string>();
+                            room["description"] = row["description"].as<std::string>();
+                            rooms_list_for_view.push_back(room);
                         }
-                        os << "</ul>";
+                        view_data.insert("rooms_for_view", rooms_list_for_view);
+                        auto resp = drogon::HttpResponse::newHttpViewResponse("rooms_list.csp", view_data);
+                        callback(resp);
                     }
-                    os << "</body></html>";
-
-                    auto resp = drogon::HttpResponse::newHttpResponse();
-                    resp->setBody(os.str());
-                    resp->setContentTypeCode(drogon::CT_TEXT_HTML);
-                    callback(resp);
                 },
                 [callback](const drogon::orm::DrogonDbException& e)
                 {
@@ -85,12 +107,12 @@ int main()
                     auto resp = drogon::HttpResponse::newHttpResponse();
                     resp->setStatusCode(drogon::k500InternalServerError);
                     resp->setBody(
-                        "Error: Could not retrieve room data from the database. Details: " + std::string(e.base().what()));
+                        "<html><body><h1>Error</h1><p>Could not retrieve room data. Details: " +
+                        std::string(e.base().what()) + "</p></body></html>");
+                    resp->setContentTypeCode(drogon::CT_TEXT_HTML);
                     callback(resp);
-                }
-            );
-        }
-    );
+                });
+        });
 
     drogon::app().registerHandler(
         "/hello",
