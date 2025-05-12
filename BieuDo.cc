@@ -1,28 +1,30 @@
 #include "BieuDo.h"
 
+#include <drogon/HttpResponse.h> // Cần để tạo response
+
 // Add definition of your processing function here
 void BieuDo::bieuDoDien(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback)
 {
-    drogon::HttpViewData data;
+    HttpViewData data;
     data.insert("name", "Tan");
 
-    auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoDien.csp", data);
+    auto resp = HttpResponse::newHttpViewResponse("BieuDoDien.csp", data);
     callback(resp);
 }
 
 void BieuDo::bieuDoNuoc(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback)
 {
-    drogon::HttpViewData data;
+    HttpViewData data;
     data.insert("name", "Tan");
 
-    auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoNuoc.csp", data);
+    auto resp = HttpResponse::newHttpViewResponse("BieuDoNuoc.csp", data);
     callback(resp);
 }
 void BieuDo::bieuDoGa(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback)
 {
-    drogon::HttpViewData data;
+    HttpViewData data;
     data.insert("name", "Tan");
 
-    auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoGa.csp", data);
+    auto resp = HttpResponse::newHttpViewResponse("BieuDoGa.csp", data);
     callback(resp);
 }

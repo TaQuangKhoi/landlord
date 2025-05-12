@@ -47,27 +47,6 @@ int main() {
                                       callback(resp);
                                   });
 
-    drogon::app().registerHandler("/bieu-do-dien",
-                                  [=](const drogon::HttpRequestPtr &req,
-                                      std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
-                                      drogon::HttpViewData data;
-                                      data.insert("name", "Tan");
-
-
-                                      auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoDien.csp", data);
-                                      callback(resp);
-                                  });
-
-    drogon::app().registerHandler("/bieu-do-nuoc",
-                                      [=](const drogon::HttpRequestPtr &req,
-                                          std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
-                                          drogon::HttpViewData data;
-                                          data.insert("name", "Tan");
-
-
-                                          auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoWater.csp", data);
-                                          callback(resp);
-                                      });
      drogon::app().registerHandler("/bieu-do-thue-phong",
                                       [=](const drogon::HttpRequestPtr &req,
                                           std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
@@ -76,16 +55,6 @@ int main() {
 
 
                                           auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoDien.csp", data);
-                                          callback(resp);
-                                      });
-    drogon::app().registerHandler("/bieu-do-ga",
-                                      [=](const drogon::HttpRequestPtr &req,
-                                          std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
-                                          drogon::HttpViewData data;
-                                          data.insert("name", "Tan");
-
-
-                                          auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoGa.csp", data);
                                           callback(resp);
                                       });
 
