@@ -1,21 +1,18 @@
 #include <drogon/drogon.h>
 #include <drogon/orm/DbClient.h>
 
-int main()
-{
+int main() {
     auto dbClient = drogon::orm::DbClient::newSqlite3Client("filename=landlord.db", 1);
 
     drogon::app().loadConfigFile("../config.json");
 
 
-    try
-    {
+    try {
         auto createTableResult = dbClient->execSqlSync(
             "CREATE TABLE IF NOT EXISTS rooms (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, description TEXT)");
 
         auto countResult = dbClient->execSqlSync("SELECT COUNT(*) FROM rooms");
-        if (!countResult.empty() && countResult[0][0].as<int>() == 0)
-        {
+        if (!countResult.empty() && countResult[0][0].as<int>() == 0) {
             dbClient->execSqlSync(
                 "INSERT INTO rooms (name, description) VALUES ('Living Room', 'A cozy place to relax and watch TV.')");
             dbClient->execSqlSync(
@@ -24,40 +21,78 @@ int main()
                 "INSERT INTO rooms (name, description) VALUES ('Master Bedroom', 'Spacious master bedroom with an en-suite bathroom.')");
             dbClient->execSqlSync(
                 "INSERT INTO rooms (name, description) VALUES ('Guest Bedroom', 'Comfortable room for guests.')");
-        }
-        else if (countResult.empty())
-        {
+        } else if (countResult.empty()) {
             LOG_WARN << "Could not determine count from 'rooms' table, or table is empty.";
+        } else {
         }
-        else
-        {
-        }
-    }
-    catch (const drogon::orm::DrogonDbException& e)
-    {
+    } catch (const drogon::orm::DrogonDbException &e) {
         LOG_ERROR << "Database setup error for 'rooms' table: " << e.base().what();
     }
 
     drogon::app().registerHandler("/",
-                                  [=](const drogon::HttpRequestPtr& req,
-                                      std::function<void(const drogon::HttpResponsePtr&)>&& callback)
-                                  {
-                                      // Đây là dữ liệu dùng dể hiển thị trên trinình duyệt
+                                  [=](const drogon::HttpRequestPtr &req,
+                                      std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+
+                                      // 1. Tạo dữ liệu để hiển thị trên trình duyệt
                                       drogon::HttpViewData duLieuToShowInHTML;
 
-
+                                      // 2. Chèn dữ liệu vào view (ở đây là tên "Tan")
                                       duLieuToShowInHTML.insert("name", "Tan");
 
+                                      // 3. Tạo một response sử dụng view "Main.csp" và dữ liệu đã chèn vào
+                                      auto resp = drogon::HttpResponse::newHttpViewResponse(
+                                          "Main.csp", duLieuToShowInHTML);
 
-                                      auto resp = drogon::HttpResponse::newHttpViewResponse("Main.csp", duLieuToShowInHTML);
+                                      // 4. Gửi phản hồi qua callback
                                       callback(resp);
                                   });
 
+    drogon::app().registerHandler("/bieu-do-dien",
+                                  [=](const drogon::HttpRequestPtr &req,
+                                      std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+                                      drogon::HttpViewData data;
+                                      data.insert("name", "Tan");
+
+
+                                      auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoDien.csp", data);
+                                      callback(resp);
+                                  });
+
+    drogon::app().registerHandler("/bieu-do-nuoc",
+                                      [=](const drogon::HttpRequestPtr &req,
+                                          std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+                                          drogon::HttpViewData data;
+                                          data.insert("name", "Tan");
+
+
+                                          auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoWater.csp", data);
+                                          callback(resp);
+                                      });
+     drogon::app().registerHandler("/bieu-do-thue-phong",
+                                      [=](const drogon::HttpRequestPtr &req,
+                                          std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+                                          drogon::HttpViewData data;
+                                          data.insert("name", "Tan");
+
+
+                                          auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoDien.csp", data);
+                                          callback(resp);
+                                      });
+    drogon::app().registerHandler("/bieu-do-ga",
+                                      [=](const drogon::HttpRequestPtr &req,
+                                          std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+                                          drogon::HttpViewData data;
+                                          data.insert("name", "Tan");
+
+
+                                          auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoGa.csp", data);
+                                          callback(resp);
+                                      });
+
     drogon::app().registerHandler(
         "/hi/{}",
-        [](const drogon::HttpRequestPtr& req, std::function<void(const drogon::HttpResponsePtr&)>&& callback,
-           const std::string& name)
-        {
+        [](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback,
+           const std::string &name) {
             drogon::HttpViewData data;
             data.insert("name", name);
 
@@ -66,9 +101,8 @@ int main()
         });
 
     drogon::app().registerHandler("/list_para",
-                                  [=](const drogon::HttpRequestPtr& req,
-                                      std::function<void (const drogon::HttpResponsePtr&)>&& callback)
-                                  {
+                                  [=](const drogon::HttpRequestPtr &req,
+                                      std::function<void (const drogon::HttpResponsePtr &)> &&callback) {
                                       auto para = req->getParameters();
                                       drogon::HttpViewData data;
                                       data.insert("title", "ListParameters");
@@ -80,32 +114,26 @@ int main()
     drogon::app().registerHandler(
         "/room-list",
         [dbClient](
-        const drogon::HttpRequestPtr& req,
-        std::function<void(const drogon::HttpResponsePtr&)>&& callback)
-        {
+    const drogon::HttpRequestPtr &req,
+    std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
             std::string sql = "SELECT id, name, description FROM rooms;";
 
             dbClient->execSqlAsync(
                 sql,
-                [callback](const drogon::orm::Result& result)
-                {
-                    if (result.empty())
-                    {
+                [callback](const drogon::orm::Result &result) {
+                    if (result.empty()) {
                         // KIỂM TRA Ở ĐÂY
                         // Nếu không có room nào, trả về text thuần
                         auto resp = drogon::HttpResponse::newHttpResponse();
                         resp->setBody("No rooms found in the database.");
                         resp->setContentTypeCode(drogon::CT_TEXT_PLAIN); // Quan trọng: đặt content type là text
                         callback(resp);
-                    }
-                    else
-                    {
+                    } else {
                         // Nếu có room, tiếp tục render file CSP như bình thường
                         drogon::HttpViewData view_data;
-                        std::vector<std::map<std::string, std::string>> rooms_list_for_view;
+                        std::vector<std::map<std::string, std::string> > rooms_list_for_view;
 
-                        for (const auto& row : result)
-                        {
+                        for (const auto &row: result) {
                             LOG_INFO << "Room ID: " << row["id"].as<std::string>()
                                      << ", Name: " << row["name"].as<std::string>()
                                      << ", Description: " << row["description"].as<std::string>();
@@ -124,8 +152,7 @@ int main()
                         callback(resp);
                     }
                 },
-                [callback](const drogon::orm::DrogonDbException& e)
-                {
+                [callback](const drogon::orm::DrogonDbException &e) {
                     LOG_ERROR << "Database query failed for /: " << e.base().what();
                     auto resp = drogon::HttpResponse::newHttpResponse();
                     resp->setStatusCode(drogon::k500InternalServerError);
@@ -139,9 +166,8 @@ int main()
 
     drogon::app().registerHandler(
         "/hello",
-        [](const drogon::HttpRequestPtr& req,
-           std::function<void(const drogon::HttpResponsePtr&)>&& callback)
-        {
+        [](const drogon::HttpRequestPtr &req,
+           std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
             auto resp = drogon::HttpResponse::newHttpResponse();
             resp->setBody("Hello, Drogon!");
             callback(resp);
@@ -149,9 +175,8 @@ int main()
 
     drogon::app().registerHandler(
         "/tan",
-        [](const drogon::HttpRequestPtr& req,
-           std::function<void(const drogon::HttpResponsePtr&)>&& callback)
-        {
+        [](const drogon::HttpRequestPtr &req,
+           std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
             auto resp = drogon::HttpResponse::newHttpResponse();
             // resp->setBody("Hello, Tan!");
             callback(resp);
@@ -160,9 +185,8 @@ int main()
 
     drogon::app().registerHandler(
         "/about",
-        [](const drogon::HttpRequestPtr& req,
-           std::function<void(const drogon::HttpResponsePtr&)>&& callback)
-        {
+        [](const drogon::HttpRequestPtr &req,
+           std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
             auto resp = drogon::HttpResponse::newHttpResponse();
             resp->setBody("Hello, guest! i am Tan! I am a software engineer!");
             callback(resp);
