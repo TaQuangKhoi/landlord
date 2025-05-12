@@ -4,6 +4,7 @@
 
 using namespace drogon;
 
+// Đường nhỏ
 class TanController : public drogon::HttpSimpleController<TanController>
 {
   public:

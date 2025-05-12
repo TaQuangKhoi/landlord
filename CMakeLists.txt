@@ -10,6 +10,7 @@ add_executable(landlord
         TanController.cc
         TestCtrl.cc
         admin/User.cc
+        BieuDo.cc
 )
 
 find_package(Drogon CONFIG REQUIRED)
