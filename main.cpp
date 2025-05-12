@@ -42,11 +42,14 @@ int main()
                                   [=](const drogon::HttpRequestPtr& req,
                                       std::function<void(const drogon::HttpResponsePtr&)>&& callback)
                                   {
-                                      drogon::HttpViewData data;
-                                      data.insert("name", "Tan");
+                                      // Đây là dữ liệu dùng dể hiển thị trên trinình duyệt
+                                      drogon::HttpViewData duLieuToShowInHTML;
 
 
-                                      auto resp = drogon::HttpResponse::newHttpViewResponse("Main.csp", data);
+                                      duLieuToShowInHTML.insert("name", "Tan");
+
+
+                                      auto resp = drogon::HttpResponse::newHttpViewResponse("Main.csp", duLieuToShowInHTML);
                                       callback(resp);
                                   });
 
@@ -150,7 +153,7 @@ int main()
            std::function<void(const drogon::HttpResponsePtr&)>&& callback)
         {
             auto resp = drogon::HttpResponse::newHttpResponse();
-            resp->setBody("Hello, Tan!");
+            // resp->setBody("Hello, Tan!");
             callback(resp);
         });
 
