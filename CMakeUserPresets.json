@@ -7,6 +7,20 @@
       "environment": {
         "VCPKG_ROOT": "C:\\Repositories\\contribute\\vcpkg"
       }
+    },
+    {
+      "name": "tan",
+      "inherits": "vcpkg",
+      "environment": {
+        "VCPKG_ROOT": "C:\\vcpkg"
+      }
+    },
+    {
+      "name": "keio",
+      "inherits": "vcpkg",
+      "environment": {
+        "VCPKG_ROOT": "C:\\Repositories\\contribute\\vcpkg"
+      }
     }
   ]
 }
