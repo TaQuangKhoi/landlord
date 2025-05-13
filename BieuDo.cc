@@ -17,9 +17,10 @@ void BieuDo::bieuDoNuoc(const HttpRequestPtr& req, std::function<void (const Htt
     HttpViewData data;
     data.insert("name", "Tan");
 
-    auto resp = HttpResponse::newHttpViewResponse("BieuDoNuoc.csp", data);
+    auto resp = HttpResponse::newHttpViewResponse("BieuDoWater.csp", data);
     callback(resp);
 }
+
 void BieuDo::bieuDoGa(const HttpRequestPtr& req, std::function<void (const HttpResponsePtr &)> &&callback)
 {
     HttpViewData data;
