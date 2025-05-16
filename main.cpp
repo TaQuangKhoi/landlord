@@ -50,12 +50,12 @@ int main() {
      drogon::app().registerHandler("/bieu-do-thue-phong",
                                       [=](const drogon::HttpRequestPtr &req,
                                           std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+                                          
                                           drogon::HttpViewData data;
                                           data.insert("name", "Tan");
-
-
                                           auto resp = drogon::HttpResponse::newHttpViewResponse("BieuDoDien.csp", data);
                                           callback(resp);
+
                                       });
 
     drogon::app().registerHandler(

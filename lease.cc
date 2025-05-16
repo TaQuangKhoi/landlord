@@ -9,6 +9,7 @@ void lease::giaPhong(
     resp->setStatusCode(k200OK);
     resp->setContentTypeCode(CT_TEXT_PLAIN);
     resp->setBody("This is Ly Gia Phong");
+
     //gray
     callback(resp); // Gửi về
 }

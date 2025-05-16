@@ -11,6 +11,8 @@ add_executable(landlord
         TestCtrl.cc
         admin/User.cc
         BieuDo.cc
+        lease.cc
+        rooms.cc
 )
 
 find_package(Drogon CONFIG REQUIRED)
