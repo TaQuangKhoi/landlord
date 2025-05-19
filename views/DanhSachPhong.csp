@@ -1,3 +1,4 @@
+<%inc#include <json/json.h> %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,13 +17,25 @@
         <th>room price</th>
         <th>room quality</th>
       </tr>
-    @foreach (auto room : rooms) {
-    <tr>
-        <td>@room["name"].asString()</td>
-        <td>@room["price"].asInt()</td>
-        <td>@room["quality"].asString()</td>
-    </tr>
+<%c++
+    auto rooms = @@.get<Json::Value>("rooms");
+    if (!rooms.empty() && rooms.isArray()) {
+        for (const auto& room : rooms) {
+%>
+            <div>
+                <p>Name: <%c++ $$ << room["name"].asString(); %></p>
+                <p>Area: <%c++ $$ << room["area"].asFloat(); %> m2</p>
+                <p>Price: <%c++ $$ << room["price"].asInt(); %></p>
+            </div>
+            <hr/>
+<%c++
+        }
+    } else {
+%>
+    <p>No rooms found.</p>
+<%c++
     }
+%>
     </table>
   </body>
 </html>
