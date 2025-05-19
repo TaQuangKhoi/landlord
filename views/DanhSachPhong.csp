@@ -16,12 +16,13 @@
         <th>room price</th>
         <th>room quality</th>
       </tr>
-
-      <tr>
-        <td>101</td>
-        <td>500k</td>
-        <td>normal</td>
-      </tr>
+    @foreach (auto room : rooms) {
+    <tr>
+        <td>@room["name"].asString()</td>
+        <td>@room["price"].asInt()</td>
+        <td>@room["quality"].asString()</td>
+    </tr>
+    }
     </table>
   </body>
 </html>
